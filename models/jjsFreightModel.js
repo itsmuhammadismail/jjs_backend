@@ -16,26 +16,31 @@ const jjsFreightSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Customer",
+    },
     shipping: {
-        type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Shipping",
     },
     vanning: {
-        type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Vanning",
     },
     customerPayment: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "CustomerPayment",
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "CustomerPayment",
     },
     container: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "CustomerPayment",
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Container",
+    },
   },
   {
     timestamps: true,

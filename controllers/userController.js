@@ -40,6 +40,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
+      role: user.role,
       token: generateToken(user._id),
     });
   } else {
@@ -63,6 +64,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
+      role: user.role,
       token: generateToken(user._id),
     });
   } else {
