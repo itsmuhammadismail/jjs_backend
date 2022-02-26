@@ -19,7 +19,7 @@ export const receiptVoucher = asyncHandler(async (req, res) => {
     customer,
     accountant,
     job_no,
-abc
+
   } = req.body;
 
   const jjs = await JJSFreight.findOne({ job_no });
