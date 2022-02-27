@@ -56,6 +56,8 @@ const {
     truck,
   } = req.body;
 
+  
+
   const customer = await Customer.create({
     customer_name: customer_name,
     contact_person: contact_person,
@@ -138,3 +140,38 @@ const {
     throw new Error("Invalid jjsfreight data");
   }
 })
+
+// @desc    finding dropdown on entering customer_name
+// @route   GET /api/findcustomer
+export const findCustomer =  asyncHandler(async (req, res) => {
+  const {text} = req.body;
+
+  const cutomers = await  Customer.find(
+      { "customer_name": { "$regex": text} },);
+       
+        res.status(201).json({
+          cutomers
+        });
+      
+  });
+  // @desc    filling customer form data through customer name 
+  // @route   GET /api/customerdetails
+export const customerDetails =  asyncHandler(async (req, res) => {
+  const {customer_name} = req.body;
+
+  const details = await  Customer.findOne( {customer_name});
+       
+        res.status(201).json({
+          details
+        });
+      
+  });
+
+// @desc    Get jjsFreight
+// @route   GET /api/getjjsfreight
+// @access  protect
+export const getJJSFreight = asyncHandler(async (req, res) => {
+  const jjsfreight = await JJSFreight.find();
+
+  res.status(200).json(jjsfreight)
+});

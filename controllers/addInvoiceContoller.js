@@ -132,7 +132,7 @@ export const addInvoice = asyncHandler(async (req, res) => {
     invoice_dhs_damagescharge,
     cost_dhs_paryialoffloading,
     invoice_dhs_paryialoffloading,
-    jjsfreight,
+    job_no,
   } = req.body;
 
   const jjs = await JJSFreight.findOne({ job_no });
@@ -283,4 +283,25 @@ export const addInvoice = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Invalid add invoice data");
   }
+});
+
+// @desc    Get Invoices
+// @route   GET /api/getinvoice
+// @access  protect
+export const getInvoice = asyncHandler(async (req, res) => {
+  const invoices = await AddInvoice.find();
+
+  res.status(200).json(invoices)
+});
+
+// @desc    Update Invoices
+// @route   PUT /api/updateinvoice/:id
+// @access  protect
+export const updateInvoice = asyncHandler(async (req, res) => {
+  const {approve} = req.body;
+  const invoice = await AddInvoice.findByIdAndUpdate(req.params.id, req.body, {
+    approve : approve,
+ 
+  })
+  res.status(200).json(invoice)
 });

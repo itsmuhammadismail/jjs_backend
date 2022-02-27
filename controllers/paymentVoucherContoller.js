@@ -54,3 +54,12 @@ export const paymentVoucher = asyncHandler(async (req, res) => {
     throw new Error("Invalid payment voucher data");
   }
 });
+
+// @desc    Get payment Voucher
+// @route   GET /api/getpaymentvoucher
+// @access  protect
+export const getPaymentVoucher = asyncHandler(async (req, res) => {
+  const paymentvoucher = await PaymentVoucher.find();
+
+  res.status(200).json(paymentvoucher)
+});
