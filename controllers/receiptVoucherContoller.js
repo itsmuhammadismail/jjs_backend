@@ -55,3 +55,13 @@ export const receiptVoucher = asyncHandler(async (req, res) => {
     throw new Error("Invalid receipt voucher data");
   }
 });
+
+
+// @desc    Get receipt voucher
+// @route   GET /api/getreceiptvoucher
+// @access  protect
+export const getrReceiptVoucher= asyncHandler(async (req, res) => {
+  const receiptvoucher = await ReceiptVoucher.find();
+
+  res.status(200).json(receiptvoucher)
+});
