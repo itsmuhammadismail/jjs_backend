@@ -48,6 +48,7 @@ export const paymentVoucher = asyncHandler(async (req, res) => {
   if (paymentvoucher) {
     res.status(201).json({
       id: paymentvoucher.id,
+      status: "success",
     });
   } else {
     res.status(400);

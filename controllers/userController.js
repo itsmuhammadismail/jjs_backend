@@ -42,6 +42,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       role: user.role,
       token: generateToken(user._id),
+      status: "success",
     });
   } else {
     res.status(400);
@@ -66,6 +67,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       email: user.email,
       role: user.role,
       token: generateToken(user._id),
+      status: "success",
     });
   } else {
     res.status(400);

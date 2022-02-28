@@ -144,7 +144,6 @@ export const addInvoice = asyncHandler(async (req, res) => {
     throw new Error("JJSFreight ID not found");
   }
 
-
   // Create add invoice
   const addinvoice = await AddInvoice.create({
     cost_dhs_airsea,
@@ -278,6 +277,7 @@ export const addInvoice = asyncHandler(async (req, res) => {
   if (addinvoice) {
     res.status(201).json({
       _id: addinvoice.id,
+      status: "success",
     });
   } else {
     res.status(400);

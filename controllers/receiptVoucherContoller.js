@@ -19,7 +19,6 @@ export const receiptVoucher = asyncHandler(async (req, res) => {
     customer,
     accountant,
     job_no,
-
   } = req.body;
 
   const jjs = await JJSFreight.findOne({ job_no });
@@ -48,7 +47,8 @@ export const receiptVoucher = asyncHandler(async (req, res) => {
 
   if (receiptvoucher) {
     res.status(201).json({
-      _id:receiptvoucher.id,
+      _id: receiptvoucher.id,
+      status: "success",
     });
   } else {
     res.status(400);

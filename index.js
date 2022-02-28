@@ -19,7 +19,6 @@ const port = process.env.PORT || 5000;
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(errorHandler);
 
 // Routes
 app.use("/api/users", userRouter);
@@ -28,6 +27,8 @@ app.use("/api", costSheetRouter);
 app.use("/api", addInvoiceRouter);
 app.use("/api", paymentVoucherRouter);
 app.use("/api", receiptVoucherRouter);
+
+app.use(errorHandler);
 
 // Listning to port
 app.listen(port, () => console.log(`Server started on port ${port}`));

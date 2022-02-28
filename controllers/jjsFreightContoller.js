@@ -11,8 +11,8 @@ import Checklist from "../models/checklistModel.js";
 // @route   POST /api/jjsfreight
 // @access  Protect
 
-export const jjsFreight =  asyncHandler(async (req, res) => {
-const {
+export const jjsFreight = asyncHandler(async (req, res) => {
+  const {
     receipt_date,
     bill_of_loading,
     job_no,
@@ -63,9 +63,6 @@ const {
     mob: mob,
     email: email,
   });
-
-
-
 
   const shipping = await Shipping.create({
     shipping_fee,
@@ -132,9 +129,10 @@ const {
   if (jjsfreight) {
     res.status(201).json({
       id: jjsfreight.id,
+      status: "success",
     });
   } else {
     res.status(400);
     throw new Error("Invalid jjsfreight data");
   }
-})
+});
