@@ -231,6 +231,10 @@ const costSheetSchema = mongoose.Schema(
     cost_dhs_manualdeposite: String,
     invoice_dhs_manualdeposite: String,
 
+    // other
+    cost_dhs_others: String,
+    invoice_dhs_others: String,
+
     //fumigation
     cost_dhs_fumigation: String,
     invoice_dhs_fumigation: String,

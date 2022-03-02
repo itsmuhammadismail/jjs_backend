@@ -6,6 +6,7 @@ import Vanning from "../models/vanningModel.js";
 import CustomerPayment from "../models/customerModel.js";
 import Container from "../models/containerModel.js";
 import Checklist from "../models/checklistModel.js";
+import jobNoModel from "../models/jobNoModel.js";
 
 // @desc    Add jjsFreight
 // @route   POST /api/jjsfreight
@@ -56,13 +57,25 @@ export const jjsFreight = asyncHandler(async (req, res) => {
     truck,
   } = req.body;
 
-  const customer = await Customer.create({
-    customer_name: customer_name,
-    contact_person: contact_person,
-    tel: tel,
-    mob: mob,
-    email: email,
-  });
+  let customer_id;
+  let checkCustomer = await Customer.findOne({ customer_name: customer_name });
+  if (checkCustomer) {
+    customer_id = checkCustomer._id;
+    checkCustomer.customer_name = customer_name;
+    checkCustomer.contact_person = contact_person;
+    checkCustomer.tel = tel;
+    checkCustomer.mob = mob;
+    checkCustomer.email = email;
+  } else {
+    const newCustomer = await Customer.create({
+      customer_name: customer_name,
+      contact_person: contact_person,
+      tel: tel,
+      mob: mob,
+      email: email,
+    });
+    customer_id = newCustomer._id;
+  }
 
   const shipping = await Shipping.create({
     shipping_fee,
@@ -110,15 +123,19 @@ export const jjsFreight = asyncHandler(async (req, res) => {
     truck,
   });
 
+  let invoiceList = JSON.parse(invoice_no);
+  console.log(invoiceList);
+  console.log(invoice_no);
+
   // Create jjsfreight
   const jjsfreight = await JJSFreight.create({
     receipt_date,
     bill_of_loading,
     job_no,
-    invoice_no,
+    invoice_no: invoiceList,
     sales_person,
     user: req.user._id,
-    customer: customer._id,
+    customer: customer_id,
     shipping: shipping._id,
     vanning: vanning._id,
     customerPayment: customerpayment._id,
@@ -127,6 +144,8 @@ export const jjsFreight = asyncHandler(async (req, res) => {
   });
 
   if (jjsfreight) {
+    console.log("Hello bhai ", await jobNoModel.findOne({}).job);
+    await jobNoModel.findOneAndUpdate({}, { $inc: { job: 1 } });
     res.status(201).json({
       id: jjsfreight.id,
       status: "success",
@@ -140,12 +159,18 @@ export const jjsFreight = asyncHandler(async (req, res) => {
 // @desc    finding dropdown on entering customer_name
 // @route   GET /api/findcustomer
 export const findCustomer = asyncHandler(async (req, res) => {
-  const { text } = req.body;
+  // const { text } = req.body;
 
-  const cutomers = await Customer.find({ customer_name: { $regex: text } });
+  // const cutomers = await Customer.find({ customer_name: { $regex: text } });
+
+  let customerList = [];
+  const cutomers = await Customer.find();
+  for (const customer of cutomers) {
+    customerList.push(customer.customer_name);
+  }
 
   res.status(201).json({
-    cutomers,
+    customerList,
   });
 });
 // @desc    filling customer form data through customer name

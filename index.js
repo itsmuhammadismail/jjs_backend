@@ -9,6 +9,7 @@ import costSheetRouter from "./routes/costSheetRoutes.js";
 import addInvoiceRouter from "./routes/addInvoiceRoutes.js";
 import paymentVoucherRouter from "./routes/paymentVoucherRoutes.js";
 import receiptVoucherRouter from "./routes/receiptVoucherRoutes.js";
+import jobNoRouter from "./routes/jobNoRoutes.js";
 
 // Configurations
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/api", costSheetRouter);
 app.use("/api", addInvoiceRouter);
 app.use("/api", paymentVoucherRouter);
 app.use("/api", receiptVoucherRouter);
+app.use("/api", jobNoRouter);
 
 app.use(errorHandler);
 

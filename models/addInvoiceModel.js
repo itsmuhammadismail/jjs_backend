@@ -7,6 +7,7 @@ const addInvoiceSchema = mongoose.Schema(
     invoice_dhs_airsea: String,
 
     //Shifting
+
     cost_dhs_shifting: String,
     invoice_dhs_shifting: String,
 
@@ -230,6 +231,10 @@ const addInvoiceSchema = mongoose.Schema(
     cost_dhs_manualdeposite: String,
     invoice_dhs_manualdeposite: String,
 
+    // other
+    cost_dhs_others: String,
+    invoice_dhs_others: String,
+
     //fumigation
     cost_dhs_fumigation: String,
     invoice_dhs_fumigation: String,
@@ -261,8 +266,6 @@ const addInvoiceSchema = mongoose.Schema(
     //paryialoffloading charge
     cost_dhs_paryialoffloading: String,
     invoice_dhs_paryialoffloading: String,
-
-    
 
     //Approve
     approve: {

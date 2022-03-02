@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import CostSheet from "../models/costSheetModel.js";
 import JJSFreight from "../models/jjsFreightModel.js";
+import Customer from "../models/customerModel.js";
 
 // @desc    Add new cost sheet
 // @route   POST /api/costsheet
@@ -119,6 +120,8 @@ export const costSheet = asyncHandler(async (req, res) => {
     invoice_dhs_manualdeposite,
     cost_dhs_fumigation,
     invoice_dhs_fumigation,
+    cost_dhs_others,
+    invoice_dhs_others,
     cost_dhs_surrenderfee,
     invoice_dhs_surrenderfee,
     cost_dhs_taxi,
@@ -134,16 +137,19 @@ export const costSheet = asyncHandler(async (req, res) => {
     cost_dhs_paryialoffloading,
     invoice_dhs_paryialoffloading,
     job_no,
+    customer_name,
   } = req.body;
 
   const jjs = await JJSFreight.findOne({ job_no });
   var jjs_id;
   if (jjs) {
-    jjs_id = jjs.id;
+    jjs_id = jjs._id;
   } else {
     res.status(400);
     throw new Error("JJSFreight ID not found");
   }
+
+  const customer = await Customer.findOne({ customer_name });
 
   // Create costsheet
   const costsheet = await CostSheet.create({
@@ -257,6 +263,8 @@ export const costSheet = asyncHandler(async (req, res) => {
     invoice_dhs_manualdeposite,
     cost_dhs_fumigation,
     invoice_dhs_fumigation,
+    cost_dhs_others,
+    invoice_dhs_others,
     cost_dhs_surrenderfee,
     invoice_dhs_surrenderfee,
     cost_dhs_taxi,
@@ -273,11 +281,12 @@ export const costSheet = asyncHandler(async (req, res) => {
     invoice_dhs_paryialoffloading,
     user: req.user._id,
     jjsfreight: jjs_id,
+    customer: customer._id,
   });
 
   if (costsheet) {
     res.status(201).json({
-      _id: costsheet.id,
+      _id: costsheet._id,
       status: "success",
     });
   } else {
@@ -286,12 +295,11 @@ export const costSheet = asyncHandler(async (req, res) => {
   }
 });
 
-
 // @desc    Get Cost Sheets
 // @route   GET /api/getcostsheet
 // @access  protect
 export const getCostSheet = asyncHandler(async (req, res) => {
   const costsheets = await CostSheet.find();
 
-  res.status(200).json(costsheets)
+  res.status(200).json(costsheets);
 });

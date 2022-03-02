@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import AddInvoice from "../models/addInvoiceModel.js";
 import JJSFreight from "../models/jjsFreightModel.js";
+import Customer from "../models/customerModel.js";
 
 // @desc    Add new add invoice
 // @route   POST /api/addinvoice
@@ -118,6 +119,8 @@ export const addInvoice = asyncHandler(async (req, res) => {
     invoice_dhs_manualdeposite,
     cost_dhs_fumigation,
     invoice_dhs_fumigation,
+    cost_dhs_others,
+    invoice_dhs_others,
     cost_dhs_surrenderfee,
     invoice_dhs_surrenderfee,
     cost_dhs_taxi,
@@ -133,6 +136,7 @@ export const addInvoice = asyncHandler(async (req, res) => {
     cost_dhs_paryialoffloading,
     invoice_dhs_paryialoffloading,
     job_no,
+    customer_name,
   } = req.body;
 
   const jjs = await JJSFreight.findOne({ job_no });
@@ -143,6 +147,8 @@ export const addInvoice = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("JJSFreight ID not found");
   }
+
+  const customer = await Customer.findOne({ customer_name });
 
   // Create add invoice
   const addinvoice = await AddInvoice.create({
@@ -256,6 +262,8 @@ export const addInvoice = asyncHandler(async (req, res) => {
     invoice_dhs_manualdeposite,
     cost_dhs_fumigation,
     invoice_dhs_fumigation,
+    cost_dhs_others,
+    invoice_dhs_others,
     cost_dhs_surrenderfee,
     invoice_dhs_surrenderfee,
     cost_dhs_taxi,
@@ -272,6 +280,7 @@ export const addInvoice = asyncHandler(async (req, res) => {
     invoice_dhs_paryialoffloading,
     user: req.user._id,
     jjsfreight: jjs_id,
+    customer: customer._id,
   });
 
   if (addinvoice) {
@@ -291,17 +300,16 @@ export const addInvoice = asyncHandler(async (req, res) => {
 export const getInvoice = asyncHandler(async (req, res) => {
   const invoices = await AddInvoice.find();
 
-  res.status(200).json(invoices)
+  res.status(200).json(invoices);
 });
 
 // @desc    Update Invoices
 // @route   PUT /api/updateinvoice/:id
 // @access  protect
 export const updateInvoice = asyncHandler(async (req, res) => {
-  const {approve} = req.body;
+  const { approve } = req.body;
   const invoice = await AddInvoice.findByIdAndUpdate(req.params.id, req.body, {
-    approve : approve,
- 
-  })
-  res.status(200).json(invoice)
+    approve: approve,
+  });
+  res.status(200).json(invoice);
 });
