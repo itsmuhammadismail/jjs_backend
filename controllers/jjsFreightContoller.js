@@ -175,3 +175,15 @@ export const getJJSFreight = asyncHandler(async (req, res) => {
 
   res.status(200).json(jjsfreight)
 });
+
+// @desc    Update jjsFreight
+// @route   PUT /api/updatejjsfreight/:id
+// @access  protect
+export const updateJJSFreight = asyncHandler(async (req, res) => {
+  const {approve} = req.body;
+  const jjsfreight = await JJSFreight.findByIdAndUpdate(req.params.id, req.body, {
+    approve : approve,
+ 
+  })
+  res.status(200).json(jjsfreight)
+});
