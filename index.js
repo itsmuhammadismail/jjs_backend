@@ -34,4 +34,5 @@ app.use("/api", jobNoRouter);
 app.use(errorHandler);
 
 // Listning to port
-app.listen(port, () => console.log(`Server started on port ${port}`));
+// app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen();
