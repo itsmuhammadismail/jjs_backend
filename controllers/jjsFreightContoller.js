@@ -104,7 +104,7 @@ export const jjsFreight = asyncHandler(async (req, res) => {
     done_by,
     certificate,
     weightment,
-    bill_of_loading_checklist,
+    bill_of_loading: bill_of_loading_checklist,
     invoice_type,
     invoice_amount,
     packing_list: packingList,
