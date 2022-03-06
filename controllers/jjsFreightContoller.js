@@ -138,7 +138,7 @@ export const jjsFreight = asyncHandler(async (req, res) => {
     customer: customer_id,
     shipping: shipping._id,
     vanning: vanning._id,
-    customerPayment: customerpayment._id,
+    customerpayment: customerpayment._id,
     container: container._id,
     checklist: checklist._id,
   });
