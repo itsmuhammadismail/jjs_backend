@@ -91,7 +91,7 @@ export const costSheet = asyncHandler(async (req, res) => {
     cost_dhs_fuel,
     invoice_dhs_fuel,
     cost_dhs_warehousestorage,
-    invoice_dhs_warehousestoragw,
+    invoice_dhs_warehousestorage,
     cost_dhs_portstorage,
     invoice_dhs_portstorage,
     cost_dhs_mcostorage,
@@ -234,7 +234,7 @@ export const costSheet = asyncHandler(async (req, res) => {
     cost_dhs_fuel,
     invoice_dhs_fuel,
     cost_dhs_warehousestorage,
-    invoice_dhs_warehousestoragw,
+    invoice_dhs_warehousestorage,
     cost_dhs_portstorage,
     invoice_dhs_portstorage,
     cost_dhs_mcostorage,
@@ -299,7 +299,7 @@ export const costSheet = asyncHandler(async (req, res) => {
 // @route   GET /api/getcostsheet
 // @access  protect
 export const getCostSheet = asyncHandler(async (req, res) => {
-  const costsheets = await CostSheet.find().populate('jjsfreight','job_no');
+  const costsheets = await CostSheet.find().populate("jjsfreight", "job_no");
 
   res.status(200).json(costsheets);
 });

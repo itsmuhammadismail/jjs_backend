@@ -118,8 +118,6 @@ export const jjsFreight = asyncHandler(async (req, res) => {
   });
 
   let invoiceList = JSON.parse(invoice_no);
-  console.log(invoiceList);
-  console.log(invoice_no);
 
   // Create jjsfreight
   const jjsfreight = await JJSFreight.create({
