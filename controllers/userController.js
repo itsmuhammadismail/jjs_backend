@@ -42,6 +42,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       role: user.role,
       token: generateToken(user._id),
+      status: "success",
     });
   } else {
     res.status(400);
@@ -66,6 +67,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       email: user.email,
       role: user.role,
       token: generateToken(user._id),
+      status: "success",
     });
   } else {
     res.status(400);
@@ -82,7 +84,5 @@ export const getMe = asyncHandler(async (req, res) => {
 
 // Generate JWT
 const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
-  });
+  return jwt.sign({ id }, process.env.JWT_SECRET, {});
 };
