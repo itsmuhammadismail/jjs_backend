@@ -3,7 +3,7 @@ import JJSFreight from "../models/jjsFreightModel.js";
 import Customer from "../models/customerModel.js";
 import Shipping from "../models/shippingModel.js";
 import Vanning from "../models/vanningModel.js";
-import CustomerPayment from "../models/customerModel.js";
+import CustomerPayment from "../models/customerPaymentModel.js";
 import Container from "../models/containerModel.js";
 import Checklist from "../models/checklistModel.js";
 import jobNoModel from "../models/jobNoModel.js";
@@ -107,8 +107,8 @@ export const jjsFreight = asyncHandler(async (req, res) => {
     bill_of_loading_checklist,
     invoice_type,
     invoice_amount,
-    packingList,
-    certificate_checklist,
+    packing_list: packingList,
+    certificate_of_origin: certificate_checklist,
     sg,
     cash,
     ep,

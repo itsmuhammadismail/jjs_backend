@@ -12,6 +12,6 @@ router.post("/jjsfreight", protect, jjsFreight);
 router.get("/getjjsfreight", protect, getJJSFreight);
 router.put("/updatejjsfreight/:id", protect, updateJJSFreight);
 router.get("/findcustomer", findCustomer);
-router.get("/customerdetails", protect, customerDetails);
+router.post("/customerdetails", protect, customerDetails);
 
 export default router;
