@@ -290,7 +290,7 @@ export const addInvoice = asyncHandler(async (req, res) => {
 // @route   GET /api/getinvoice
 // @access  protect
 export const getInvoice = asyncHandler(async (req, res) => {
-  const invoices = await AddInvoice.find();
+  const invoices = await AddInvoice.find().populate('jjsfreight','job_no');
 
   res.status(200).json(invoices)
 });

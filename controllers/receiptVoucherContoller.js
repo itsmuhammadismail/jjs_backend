@@ -61,7 +61,7 @@ export const receiptVoucher = asyncHandler(async (req, res) => {
 // @route   GET /api/getreceiptvoucher
 // @access  protect
 export const getrReceiptVoucher= asyncHandler(async (req, res) => {
-  const receiptvoucher = await ReceiptVoucher.find();
+  const receiptvoucher = await ReceiptVoucher.find().populate('jjsfreight','job_no');
 
   res.status(200).json(receiptvoucher)
 });

@@ -290,7 +290,7 @@ export const costSheet = asyncHandler(async (req, res) => {
 // @route   GET /api/getcostsheet
 // @access  protect
 export const getCostSheet = asyncHandler(async (req, res) => {
-  const costsheets = await CostSheet.find();
+  const costsheets = await CostSheet.find().populate('jjsfreight','job_no');
 
   res.status(200).json(costsheets)
 });
