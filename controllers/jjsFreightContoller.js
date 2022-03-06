@@ -58,24 +58,18 @@ export const jjsFreight = asyncHandler(async (req, res) => {
   } = req.body;
 
   let customer_id;
-  let checkCustomer = await Customer.findOne({ customer_name: customer_name });
-  if (checkCustomer) {
-    customer_id = checkCustomer._id;
-    checkCustomer.customer_name = customer_name;
-    checkCustomer.contact_person = contact_person;
-    checkCustomer.tel = tel;
-    checkCustomer.mob = mob;
-    checkCustomer.email = email;
-  } else {
-    const newCustomer = await Customer.create({
-      customer_name: customer_name,
-      contact_person: contact_person,
-      tel: tel,
-      mob: mob,
-      email: email,
-    });
-    customer_id = newCustomer._id;
-  }
+  let checkCustomer = await Customer.findOneAndDelete({
+    customer_name: customer_name,
+  });
+
+  const newCustomer = await Customer.create({
+    customer_name: customer_name,
+    contact_person: contact_person,
+    tel: tel,
+    mob: mob,
+    email: email,
+  });
+  customer_id = newCustomer._id;
 
   const shipping = await Shipping.create({
     shipping_fee,
@@ -144,7 +138,6 @@ export const jjsFreight = asyncHandler(async (req, res) => {
   });
 
   if (jjsfreight) {
-    console.log("Hello bhai ", await jobNoModel.findOne({}).job);
     await jobNoModel.findOneAndUpdate({}, { $inc: { job: 1 } });
     res.status(201).json({
       id: jjsfreight.id,
