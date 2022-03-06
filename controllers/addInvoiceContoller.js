@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import AddInvoice from "../models/addInvoiceModel.js";
 import JJSFreight from "../models/jjsFreightModel.js";
 
+
 // @desc    Add new add invoice
 // @route   POST /api/addinvoice
 // @access  Protect
@@ -305,3 +306,4 @@ export const updateInvoice = asyncHandler(async (req, res) => {
   })
   res.status(200).json(invoice)
 });
+

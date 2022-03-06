@@ -171,8 +171,14 @@ export const customerDetails =  asyncHandler(async (req, res) => {
 // @route   GET /api/getjjsfreight
 // @access  protect
 export const getJJSFreight = asyncHandler(async (req, res) => {
-  const jjsfreight = await JJSFreight.find();
-
+  const jjsfreight = await JJSFreight.find().populate('customer')
+                                            .populate('shipping')
+                                            .populate('vanning')
+                                            .populate('customerpayment')
+                                            .populate('container')
+                                            .populate('checklist');
+  console.log(jjsfreight );
+   
   res.status(200).json(jjsfreight)
 });
 
