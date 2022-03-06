@@ -65,3 +65,16 @@ export const getrReceiptVoucher= asyncHandler(async (req, res) => {
 
   res.status(200).json(receiptvoucher)
 });
+
+
+// @desc    Update receipt voucher
+// @route   PUT /api/updatereceiptvoucher/:id
+// @access  protect
+export const updateReceiptVoucher= asyncHandler(async (req, res) => {
+  const {approve} = req.body;
+  const receiptvoucher = await ReceiptVoucher.findByIdAndUpdate(req.params.id, req.body, {
+    approve : approve,
+ 
+  })
+  res.status(200).json(receiptvoucher)
+});

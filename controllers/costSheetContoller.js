@@ -303,3 +303,14 @@ export const getCostSheet = asyncHandler(async (req, res) => {
 
   res.status(200).json(costsheets);
 });
+
+// @desc    Update Cost Sheets
+// @route   PUT /api/updatecostsheet/:id
+// @access  protect
+export const updateCostSheet = asyncHandler(async (req, res) => {
+  const { approve } = req.body;
+  const costsheet = await CostSheet.findByIdAndUpdate(req.params.id, req.body, {
+    approve: approve,
+  });
+  res.status(200).json(costsheet);
+});

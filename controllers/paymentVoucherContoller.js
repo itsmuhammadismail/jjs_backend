@@ -64,3 +64,15 @@ export const getPaymentVoucher = asyncHandler(async (req, res) => {
 
   res.status(200).json(paymentvoucher)
 });
+
+// @desc    Update payment Voucher
+// @route   PUT /api/updatepaymentvoucher/:id
+// @access  protect
+export const updatePaymentVoucher = asyncHandler(async (req, res) => {
+  const {approve} = req.body;
+  const paymentvoucher = await PaymentVoucher.findByIdAndUpdate(req.params.id, req.body, {
+    approve : approve,
+ 
+  })
+  res.status(200).json(paymentvoucher)
+});

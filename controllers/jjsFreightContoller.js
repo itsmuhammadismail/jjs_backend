@@ -166,7 +166,7 @@ export const findCustomer = asyncHandler(async (req, res) => {
   let customerList = [];
   const cutomers = await Customer.find();
   for (const customer of cutomers) {
-    customerList.push(customer.customer_name);
+    if (customer.customer_name) customerList.push(customer.customer_name);
   }
 
   res.status(201).json({
@@ -191,5 +191,20 @@ export const customerDetails = asyncHandler(async (req, res) => {
 export const getJJSFreight = asyncHandler(async (req, res) => {
   const jjsfreight = await JJSFreight.find();
 
+  res.status(200).json(jjsfreight);
+});
+
+// @desc    Update jjsFreight
+// @route   PUT /api/updatejjsfreight/:id
+// @access  protect
+export const updateJJSFreight = asyncHandler(async (req, res) => {
+  const { approve } = req.body;
+  const jjsfreight = await JJSFreight.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      approve: approve,
+    }
+  );
   res.status(200).json(jjsfreight);
 });
