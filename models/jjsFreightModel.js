@@ -31,7 +31,7 @@ const jjsFreightSchema = mongoose.Schema(
       required: true,
       ref: "Vanning",
     },
-    customerPayment: {
+    customerpayment: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "CustomerPayment",

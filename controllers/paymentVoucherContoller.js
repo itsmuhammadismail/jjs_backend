@@ -60,7 +60,7 @@ export const paymentVoucher = asyncHandler(async (req, res) => {
 // @route   GET /api/getpaymentvoucher
 // @access  protect
 export const getPaymentVoucher = asyncHandler(async (req, res) => {
-  const paymentvoucher = await PaymentVoucher.find();
+  const paymentvoucher = await PaymentVoucher.find().populate('jjsfreight','job_no');
 
   res.status(200).json(paymentvoucher)
 });
