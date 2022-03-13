@@ -2,6 +2,13 @@ import asyncHandler from "express-async-handler";
 import AddInvoice from "../models/addInvoiceModel.js";
 import JJSFreight from "../models/jjsFreightModel.js";
 import Customer from "../models/customerModel.js";
+import puppeteer from "puppeteer";
+import fs from "fs";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import invoiePdf from "./pdf/invoivePdf.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // @desc    Add new add invoice
 // @route   POST /api/addinvoice
@@ -298,7 +305,22 @@ export const addInvoice = asyncHandler(async (req, res) => {
 // @route   GET /api/getinvoice
 // @access  protect
 export const getInvoice = asyncHandler(async (req, res) => {
-  const invoices = await AddInvoice.find().populate("jjsfreight", "job_no");
+  const invoices = await AddInvoice.find({ approve: true }).populate(
+    "jjsfreight",
+    "job_no"
+  );
+
+  res.status(200).json(invoices);
+});
+
+// @desc    Get Invoices
+// @route   GET /api/getinvoiceNA
+// @access  protect
+export const getInvoiceNA = asyncHandler(async (req, res) => {
+  const invoices = await AddInvoice.find({ approve: false }).populate(
+    "jjsfreight",
+    "job_no"
+  );
 
   res.status(200).json(invoices);
 });
@@ -309,7 +331,47 @@ export const getInvoice = asyncHandler(async (req, res) => {
 export const updateInvoice = asyncHandler(async (req, res) => {
   const { approve } = req.body;
   const invoice = await AddInvoice.findByIdAndUpdate(req.params.id, req.body, {
-    approve: approve,
+    approve: JSON.parse(approve),
   });
   res.status(200).json(invoice);
+});
+
+// @desc    Get PDF of JJS Freight
+// @route   GET /api/jjsFreight/:id
+// @access  protect
+export const pdfInvoice = asyncHandler(async (req, res) => {
+  const invoice = await AddInvoice.findById(req.params.id).populate(
+    "jjsfreight",
+    "job_no"
+  );
+  const browser = await puppeteer.launch({
+    headless: true,
+  });
+
+  // create a new page
+  const page = await browser.newPage();
+
+  // set your html as the pages content
+  // const html = fs.readFileSync(`${__dirname}/index.html`, "utf8");
+  const html = invoiePdf(invoice);
+
+  await page.setContent(html, {
+    waitUntil: "domcontentloaded",
+  });
+
+  // create a pdf buffer
+  const pdfBuffer = await page.pdf({
+    format: "A4",
+  });
+
+  // or a .pdf file
+  await page.pdf({
+    format: "A4",
+    path: `${__dirname}/pdf/invoice.pdf`,
+  });
+
+  // close the browser
+  await browser.close();
+
+  res.download(`${__dirname}/pdf/invoice.pdf`);
 });

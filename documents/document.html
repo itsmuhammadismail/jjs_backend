@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: rgb(204, 204, 204);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 0.5cm;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+      }
+      page[size="A4"] {
+        width: 21cm;
+        height: 29.7cm;
+      }
+      @media print {
+        body,
+        page {
+          margin: 0;
+          box-shadow: 0;
+        }
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      tr {
+        display: flex;
+      }
+      td {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <page size="A4">
+      <table>
+        <tr>
+          <td>Job No.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Receipt Date</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Cash / Cheque No.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Amount</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Bank</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>The Sum of</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Paid to</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Being</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Customer</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Accountant</td>
+          <td></td>
+        </tr>
+      </table>
+    </page>
+  </body>
+</html>

@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const customerPaymentSchema = mongoose.Schema(
   {
-    costed: Number,
-    invoiced: Number,
+    costed: String,
+    invoiced: String,
   },
   {
     timestamps: true,

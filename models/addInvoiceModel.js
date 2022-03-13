@@ -220,7 +220,6 @@ const addInvoiceSchema = mongoose.Schema(
 
     //repairing charge
     cost_dhs_repairing: String,
-
     invoice_dhs_repairing: String,
 
     //general charge

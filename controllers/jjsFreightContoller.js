@@ -7,6 +7,14 @@ import CustomerPayment from "../models/customerPaymentModel.js";
 import Container from "../models/containerModel.js";
 import Checklist from "../models/checklistModel.js";
 import jobNoModel from "../models/jobNoModel.js";
+import pdf from "html-pdf";
+import jjsFreightPdf from "./pdf/jjsFreightPdf.js";
+import puppeteer from "puppeteer";
+import fs from "fs";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // @desc    Add jjsFreight
 // @route   POST /api/jjsfreight
@@ -164,6 +172,7 @@ export const findCustomer = asyncHandler(async (req, res) => {
     customerList,
   });
 });
+
 // @desc    filling customer form data through customer name
 // @route   GET /api/customerdetails
 export const customerDetails = asyncHandler(async (req, res) => {
@@ -180,7 +189,23 @@ export const customerDetails = asyncHandler(async (req, res) => {
 // @route   GET /api/getjjsfreight
 // @access  protect
 export const getJJSFreight = asyncHandler(async (req, res) => {
-  const jjsfreight = await JJSFreight.find()
+  const jjsfreight = await JJSFreight.find({ approve: true })
+    .populate("customer")
+    .populate("shipping")
+    .populate("vanning")
+    .populate("customerpayment")
+    .populate("container")
+    .populate("checklist");
+  console.log(jjsfreight);
+
+  res.status(200).json(jjsfreight);
+});
+
+// @desc    Get jjsFreight
+// @route   GET /api/getjjsfreightNA
+// @access  protect
+export const getJJSFreightNA = asyncHandler(async (req, res) => {
+  const jjsfreight = await JJSFreight.find({ approve: false })
     .populate("customer")
     .populate("shipping")
     .populate("vanning")
@@ -201,8 +226,51 @@ export const updateJJSFreight = asyncHandler(async (req, res) => {
     req.params.id,
     req.body,
     {
-      approve: approve,
+      approve: JSON.parse(approve),
     }
   );
   res.status(200).json(jjsfreight);
+});
+
+// @desc    Get PDF of JJS Freight
+// @route   GET /api/jjsFreight/:id
+// @access  protect
+export const pdfJJSFreight = asyncHandler(async (req, res) => {
+  const receiptvoucher = await JJSFreight.findById(req.params.id)
+    .populate("customer")
+    .populate("shipping")
+    .populate("vanning")
+    .populate("customerpayment")
+    .populate("container")
+    .populate("checklist");
+  const browser = await puppeteer.launch({
+    headless: true,
+  });
+
+  // create a new page
+  const page = await browser.newPage();
+
+  // set your html as the pages content
+  // const html = fs.readFileSync(`${__dirname}/index.html`, "utf8");
+  const html = jjsFreightPdf(receiptvoucher);
+
+  await page.setContent(html, {
+    waitUntil: "domcontentloaded",
+  });
+
+  // create a pdf buffer
+  const pdfBuffer = await page.pdf({
+    format: "A4",
+  });
+
+  // or a .pdf file
+  await page.pdf({
+    format: "A4",
+    path: `${__dirname}/pdf/jjs_freight.pdf`,
+  });
+
+  // close the browser
+  await browser.close();
+
+  res.download(`${__dirname}/pdf/jjs_freight.pdf`);
 });
