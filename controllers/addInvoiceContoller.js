@@ -346,6 +346,7 @@ export const pdfInvoice = asyncHandler(async (req, res) => {
   );
   const browser = await puppeteer.launch({
     headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   // create a new page

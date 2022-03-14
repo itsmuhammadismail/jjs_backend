@@ -245,6 +245,7 @@ export const pdfJJSFreight = asyncHandler(async (req, res) => {
     .populate("checklist");
   const browser = await puppeteer.launch({
     headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   // create a new page
