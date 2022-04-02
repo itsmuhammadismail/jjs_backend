@@ -1,15 +1,15 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   jjsFreight,
   getJJSFreight,
   updateJJSFreight,
   findCustomer,
   getJJSFreightNA,
   customerDetails,
-  pdfJJSFreight
-} from "../controllers/jjsFreightContoller.js";
+  pdfJJSFreight,
+} = require("../controllers/jjsFreightContoller.js");
 
-import protect from "../middlewares/authMiddleware.js";
+const protect = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 router.post("/jjsfreight", protect, jjsFreight);
@@ -20,4 +20,4 @@ router.put("/updatejjsfreight/:id", protect, updateJJSFreight);
 router.get("/findcustomer", findCustomer);
 router.post("/customerdetails", protect, customerDetails);
 
-export default router;
+module.exports = router

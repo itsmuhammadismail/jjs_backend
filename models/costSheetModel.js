@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const costSheetSchema = mongoose.Schema(
   {
@@ -293,4 +293,4 @@ const costSheetSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("CostSheet", costSheetSchema);
+module.exports = mongoose.model("CostSheet", costSheetSchema);

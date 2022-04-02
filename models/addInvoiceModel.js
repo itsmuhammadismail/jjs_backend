@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const addInvoiceSchema = mongoose.Schema(
   {
@@ -291,4 +291,4 @@ const addInvoiceSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("AddInvoice", addInvoiceSchema);
+module.exports = mongoose.model("AddInvoice", addInvoiceSchema);

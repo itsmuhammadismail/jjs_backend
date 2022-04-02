@@ -1,21 +1,16 @@
-import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
-import ReceiptVoucher from "../models/receiptVoucherModel.js";
-import JJSFreight from "../models/jjsFreightModel.js";
-import recieptVoucherPdf from "./pdf/recieptVoucherPdf.js";
-import puppeteer from "puppeteer";
-import fs from "fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const ReceiptVoucher = require("../models/receiptVoucherModel.js");
+const JJSFreight = require("../models/jjsFreightModel.js");
+const recieptVoucherPdf = require("./pdf/recieptVoucherPdf.js");
+const puppeteer = require("puppeteer");
 
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // @desc    Add new receipt voucher
 // @route   POST /api/receiptvoucher
 // @access  Protect
 
-export const receiptVoucher = asyncHandler(async (req, res) => {
+const receiptVoucher = asyncHandler(async (req, res) => {
   const {
     receipt_date,
     cash_cheque_no,
@@ -67,7 +62,7 @@ export const receiptVoucher = asyncHandler(async (req, res) => {
 // @desc    Get receipt voucher
 // @route   GET /api/getreceiptvoucher
 // @access  protect
-export const getrReceiptVoucher = asyncHandler(async (req, res) => {
+const getrReceiptVoucher = asyncHandler(async (req, res) => {
   const receiptvoucher = await ReceiptVoucher.find({ approve: true }).populate(
     "jjsfreight",
     "job_no"
@@ -79,7 +74,7 @@ export const getrReceiptVoucher = asyncHandler(async (req, res) => {
 // @desc    Get receipt voucher
 // @route   GET /api/getreceiptvoucherNA
 // @access  protect
-export const getrReceiptVoucherNA = asyncHandler(async (req, res) => {
+const getrReceiptVoucherNA = asyncHandler(async (req, res) => {
   const receiptvoucher = await ReceiptVoucher.find({ approve: false }).populate(
     "jjsfreight",
     "job_no"
@@ -91,7 +86,7 @@ export const getrReceiptVoucherNA = asyncHandler(async (req, res) => {
 // @desc    Update receipt voucher
 // @route   PUT /api/updatereceiptvoucher/:id
 // @access  protect
-export const updateReceiptVoucher = asyncHandler(async (req, res) => {
+const updateReceiptVoucher = asyncHandler(async (req, res) => {
   const { approve } = req.body;
   const receiptvoucher = await ReceiptVoucher.findByIdAndUpdate(
     req.params.id,
@@ -106,14 +101,14 @@ export const updateReceiptVoucher = asyncHandler(async (req, res) => {
 // @desc    Get PDF of Reciept voucher
 // @route   GET /api/recieptvoucherPdf
 // @access  protect
-export const pdfRecieptVoucher = asyncHandler(async (req, res) => {
+const pdfRecieptVoucher = asyncHandler(async (req, res) => {
   const receiptvoucher = await ReceiptVoucher.findById(req.params.id).populate(
     "jjsfreight",
     "job_no"
   );
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox','--disable-setuid-sandbox']
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   // create a new page
@@ -143,3 +138,11 @@ export const pdfRecieptVoucher = asyncHandler(async (req, res) => {
 
   res.download(`${__dirname}/pdf/reciept_voucher.pdf`);
 });
+
+module.exports = {
+  receiptVoucher,
+  getrReceiptVoucher,
+  getrReceiptVoucherNA,
+  updateReceiptVoucher,
+  pdfRecieptVoucher,
+};

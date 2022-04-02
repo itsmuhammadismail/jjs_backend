@@ -163,4 +163,4 @@ const recieptVoucherPdf = (data) => `
 </html>
 `;
 
-export default recieptVoucherPdf;
+module.exports = recieptVoucherPdf;

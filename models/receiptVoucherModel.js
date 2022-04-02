@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const receiptVoucherSchema = mongoose.Schema(
   {
@@ -37,4 +37,4 @@ const receiptVoucherSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("ReceiptVoucher", receiptVoucherSchema);
+module.exports = mongoose.model("ReceiptVoucher", receiptVoucherSchema);

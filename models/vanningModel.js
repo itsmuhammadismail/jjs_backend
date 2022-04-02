@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const vanningSchema = mongoose.Schema(
   {
@@ -13,4 +13,4 @@ const vanningSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("Vanning", vanningSchema);
+module.exports = mongoose.model("Vanning", vanningSchema);

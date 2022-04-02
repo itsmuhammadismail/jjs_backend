@@ -1,26 +1,22 @@
-import asyncHandler from "express-async-handler";
-import JJSFreight from "../models/jjsFreightModel.js";
-import Customer from "../models/customerModel.js";
-import Shipping from "../models/shippingModel.js";
-import Vanning from "../models/vanningModel.js";
-import CustomerPayment from "../models/customerPaymentModel.js";
-import Container from "../models/containerModel.js";
-import Checklist from "../models/checklistModel.js";
-import jobNoModel from "../models/jobNoModel.js";
-import pdf from "html-pdf";
-import jjsFreightPdf from "./pdf/jjsFreightPdf.js";
-import puppeteer from "puppeteer";
-import fs from "fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+const asyncHandler = require("express-async-handler");
+const JJSFreight = require("../models/jjsFreightModel.js");
+const Customer = require("../models/customerModel.js");
+const Shipping = require("../models/shippingModel.js");
+const Vanning = require("../models/vanningModel.js");
+const CustomerPayment = require("../models/customerPaymentModel.js");
+const Container = require("../models/containerModel.js");
+const Checklist = require("../models/checklistModel.js");
+const jobNoModel = require("../models/jobNoModel.js");
+const pdf = require("html-pdf");
+const jjsFreightPdf = require("./pdf/jjsFreightPdf.js");
+const puppeteer = require("puppeteer");
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // @desc    Add jjsFreight
 // @route   POST /api/jjsfreight
 // @access  Protect
 
-export const jjsFreight = asyncHandler(async (req, res) => {
+const jjsFreight = asyncHandler(async (req, res) => {
   const {
     receipt_date,
     bill_of_loading,
@@ -157,7 +153,7 @@ export const jjsFreight = asyncHandler(async (req, res) => {
 
 // @desc    finding dropdown on entering customer_name
 // @route   GET /api/findcustomer
-export const findCustomer = asyncHandler(async (req, res) => {
+const findCustomer = asyncHandler(async (req, res) => {
   // const { text } = req.body;
 
   // const cutomers = await Customer.find({ customer_name: { $regex: text } });
@@ -175,7 +171,7 @@ export const findCustomer = asyncHandler(async (req, res) => {
 
 // @desc    filling customer form data through customer name
 // @route   GET /api/customerdetails
-export const customerDetails = asyncHandler(async (req, res) => {
+const customerDetails = asyncHandler(async (req, res) => {
   const { customer_name } = req.body;
 
   const details = await Customer.findOne({ customer_name });
@@ -188,7 +184,7 @@ export const customerDetails = asyncHandler(async (req, res) => {
 // @desc    Get jjsFreight
 // @route   GET /api/getjjsfreight
 // @access  protect
-export const getJJSFreight = asyncHandler(async (req, res) => {
+const getJJSFreight = asyncHandler(async (req, res) => {
   const jjsfreight = await JJSFreight.find({ approve: true })
     .populate("customer")
     .populate("shipping")
@@ -204,7 +200,7 @@ export const getJJSFreight = asyncHandler(async (req, res) => {
 // @desc    Get jjsFreight
 // @route   GET /api/getjjsfreightNA
 // @access  protect
-export const getJJSFreightNA = asyncHandler(async (req, res) => {
+const getJJSFreightNA = asyncHandler(async (req, res) => {
   const jjsfreight = await JJSFreight.find({ approve: false })
     .populate("customer")
     .populate("shipping")
@@ -220,7 +216,7 @@ export const getJJSFreightNA = asyncHandler(async (req, res) => {
 // @desc    Update jjsFreight
 // @route   PUT /api/updatejjsfreight/:id
 // @access  protect
-export const updateJJSFreight = asyncHandler(async (req, res) => {
+const updateJJSFreight = asyncHandler(async (req, res) => {
   const { approve } = req.body;
   const jjsfreight = await JJSFreight.findByIdAndUpdate(
     req.params.id,
@@ -235,7 +231,7 @@ export const updateJJSFreight = asyncHandler(async (req, res) => {
 // @desc    Get PDF of JJS Freight
 // @route   GET /api/jjsFreight/:id
 // @access  protect
-export const pdfJJSFreight = asyncHandler(async (req, res) => {
+const pdfJJSFreight = asyncHandler(async (req, res) => {
   const receiptvoucher = await JJSFreight.findById(req.params.id)
     .populate("customer")
     .populate("shipping")
@@ -275,3 +271,13 @@ export const pdfJJSFreight = asyncHandler(async (req, res) => {
 
   res.download(`${__dirname}/pdf/jjs_freight.pdf`);
 });
+
+module.exports = {
+  jjsFreight,
+  findCustomer,
+  customerDetails,
+  getJJSFreight,
+  getJJSFreightNA,
+  updateJJSFreight,
+  pdfJJSFreight,
+};

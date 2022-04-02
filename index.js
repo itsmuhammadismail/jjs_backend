@@ -1,16 +1,16 @@
-import express from "express";
-import colors from "colors";
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-import errorHandler from "./middlewares/errorMiddleware.js";
-import userRouter from "./routes/userRoutes.js";
-import jjsFreightRouter from "./routes/jjsFreightRoutes.js";
-import costSheetRouter from "./routes/costSheetRoutes.js";
-import addInvoiceRouter from "./routes/addInvoiceRoutes.js";
-import paymentVoucherRouter from "./routes/paymentVoucherRoutes.js";
-import receiptVoucherRouter from "./routes/receiptVoucherRoutes.js";
-import jobNoRouter from "./routes/jobNoRoutes.js";
-import saveAs from "file-saver";
+const express = require("express");
+const colors = require("colors");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db.js");
+const errorHandler = require("./middlewares/errorMiddleware.js");
+const userRouter = require("./routes/userRoutes.js");
+const jjsFreightRouter = require("./routes/jjsFreightRoutes.js");
+const costSheetRouter = require("./routes/costSheetRoutes.js");
+const addInvoiceRouter = require("./routes/addInvoiceRoutes.js");
+const paymentVoucherRouter = require("./routes/paymentVoucherRoutes.js");
+const receiptVoucherRouter = require("./routes/receiptVoucherRoutes.js");
+const jobNoRouter = require("./routes/jobNoRoutes.js");
+const saveAs = require("file-saver");
 
 // Configurations
 dotenv.config();

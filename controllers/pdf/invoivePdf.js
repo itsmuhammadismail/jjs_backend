@@ -697,4 +697,4 @@ const invoiePdf = (data) => `
 </html>
 `;
 
-export default invoiePdf;
+module.exports = invoiePdf;

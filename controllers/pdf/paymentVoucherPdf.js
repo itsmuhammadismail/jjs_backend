@@ -163,4 +163,4 @@ const paymentVoucherPdf = (data) => `
 </html>
 `;
 
-export default paymentVoucherPdf;
+module.exports = paymentVoucherPdf;

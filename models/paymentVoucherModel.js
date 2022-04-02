@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const paymentVoucherSchema = mongoose.Schema(
   {
@@ -37,4 +37,4 @@ const paymentVoucherSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("PaymentVoucher", paymentVoucherSchema);
+module.exports = mongoose.model("PaymentVoucher", paymentVoucherSchema);

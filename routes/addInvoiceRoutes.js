@@ -1,12 +1,14 @@
-import express from "express";
-import { addInvoice , pdfInvoice} from "../controllers/addInvoiceContoller.js";
-import {
+const express = require("express");
+const {
+  addInvoice,
+  pdfInvoice,
+} = require("../controllers/addInvoiceContoller.js");
+const {
   getInvoice,
   getInvoiceNA,
-} from "../controllers/addInvoiceContoller.js";
-import { updateInvoice } from "../controllers/addInvoiceContoller.js";
-
-import protect from "../middlewares/authMiddleware.js";
+} = require("../controllers/addInvoiceContoller.js");
+const { updateInvoice } = require("../controllers/addInvoiceContoller.js");
+const protect = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 router.post("/addinvoice", protect, addInvoice);
@@ -15,4 +17,4 @@ router.get("/getinvoiceNA", protect, getInvoiceNA);
 router.get("/pdfInvoice/:id", pdfInvoice);
 router.put("/updateinvoice/:id", protect, updateInvoice);
 
-export default router;
+module.exports = router

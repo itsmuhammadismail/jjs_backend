@@ -1,9 +1,9 @@
-import express from "express";
-import { getJobNo } from "../controllers/jobNoController.js";
+const express = require("express");
+const { getJobNo } = require("../controllers/jobNoController.js");
 
-import protect from "../middlewares/authMiddleware.js";
+const protect = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 router.get("/jobno", getJobNo);
 
-export default router;
+module.exports = router

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const checklistModel = mongoose.Schema(
   {
@@ -22,4 +22,4 @@ const checklistModel = mongoose.Schema(
   }
 );
 
-export default mongoose.model("Checklist", checklistModel);
+module.exports = mongoose.model("Checklist", checklistModel);

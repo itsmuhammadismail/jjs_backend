@@ -1,21 +1,17 @@
-import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
-import CostSheet from "../models/costSheetModel.js";
-import JJSFreight from "../models/jjsFreightModel.js";
-import Customer from "../models/customerModel.js";
-import puppeteer from "puppeteer";
-import fs from "fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import invoiePdf from "./pdf/invoivePdf.js";
+const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const CostSheet = require("../models/costSheetModel.js");
+const JJSFreight = require("../models/jjsFreightModel.js");
+const Customer = require("../models/customerModel.js");
+const puppeteer = require("puppeteer");
+const invoiePdf = require("./pdf/invoivePdf.js");
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // @desc    Add new cost sheet
 // @route   POST /api/costsheet
 // @access  Protect
 
-export const costSheet = asyncHandler(async (req, res) => {
+const costSheet = asyncHandler(async (req, res) => {
   const {
     cost_dhs_airsea,
     invoice_dhs_airsea,
@@ -305,7 +301,7 @@ export const costSheet = asyncHandler(async (req, res) => {
 // @desc    Get Cost Sheets
 // @route   GET /api/getcostsheet
 // @access  protect
-export const getCostSheet = asyncHandler(async (req, res) => {
+const getCostSheet = asyncHandler(async (req, res) => {
   const costsheets = await CostSheet.find({ approve: true }).populate(
     "jjsfreight",
     "job_no"
@@ -317,7 +313,7 @@ export const getCostSheet = asyncHandler(async (req, res) => {
 // @desc    Get Cost Sheets
 // @route   GET /api/getcostsheetNA
 // @access  protect
-export const getCostSheetNA = asyncHandler(async (req, res) => {
+const getCostSheetNA = asyncHandler(async (req, res) => {
   const costsheets = await CostSheet.find({ approve: false }).populate(
     "jjsfreight",
     "job_no"
@@ -329,7 +325,7 @@ export const getCostSheetNA = asyncHandler(async (req, res) => {
 // @desc    Update Cost Sheets
 // @route   PUT /api/updatecostsheet/:id
 // @access  protect
-export const updateCostSheet = asyncHandler(async (req, res) => {
+const updateCostSheet = asyncHandler(async (req, res) => {
   const { approve } = req.body;
   const costsheet = await CostSheet.findByIdAndUpdate(req.params.id, req.body, {
     approve: JSON.parse(approve),
@@ -340,7 +336,7 @@ export const updateCostSheet = asyncHandler(async (req, res) => {
 // @desc    Get PDF of JJS Freight
 // @route   GET /api/jjsFreight/:id
 // @access  protect
-export const pdfCostsheet = asyncHandler(async (req, res) => {
+const pdfCostsheet = asyncHandler(async (req, res) => {
   const invoice = await CostSheet.findById(req.params.id).populate(
     "jjsfreight",
     "job_no"
@@ -377,3 +373,11 @@ export const pdfCostsheet = asyncHandler(async (req, res) => {
 
   res.download(`${__dirname}/pdf/invoice.pdf`);
 });
+
+module.exports = {
+  costSheet,
+  getCostSheet,
+  getCostSheetNA,
+  updateCostSheet,
+  pdfCostsheet,
+};

@@ -1,12 +1,12 @@
-import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
-import bcrypt from "bcryptjs";
-import User from "../models/userModel.js";
+const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+const User = require("../models/userModel.js");
 
 // @desc    Register new user
 // @route   POST /api/users/register
 // @access  Public
-export const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
   if (!first_name || !last_name || !email || !password) {
@@ -53,7 +53,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 // @desc    Authenticate a user
 // @route   POST /api/users/login
 // @access  Public
-export const loginUser = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   // Check for user email
@@ -78,11 +78,17 @@ export const loginUser = asyncHandler(async (req, res) => {
 // @desc    Get user data
 // @route   GET /api/users/me
 // @access  Private
-export const getMe = asyncHandler(async (req, res) => {
+const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
 
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {});
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  getMe,
 };

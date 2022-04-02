@@ -1,20 +1,16 @@
-import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
-import PaymentVoucher from "../models/paymentVoucherModel.js";
-import JJSFreight from "../models/jjsFreightModel.js";
-import puppeteer from "puppeteer";
-import fs from "fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import paymentVoucherPdf from "./pdf/paymentVoucherPdf.js";
+const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
+const PaymentVoucher = require("../models/paymentVoucherModel.js");
+const JJSFreight = require("../models/jjsFreightModel.js");
+const puppeteer = require("puppeteer");
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const paymentVoucherPdf = require("./pdf/paymentVoucherPdf.js");
 
 // @desc    Add new payment Voucher
 // @route   POST /api/paymentvoucher
 // @access  Protect
 
-export const paymentVoucher = asyncHandler(async (req, res) => {
+const paymentVoucher = asyncHandler(async (req, res) => {
   const {
     receipt_date,
     cash_cheque_no,
@@ -66,7 +62,7 @@ export const paymentVoucher = asyncHandler(async (req, res) => {
 // @desc    Get payment Voucher
 // @route   GET /api/getpaymentvoucher
 // @access  protect
-export const getPaymentVoucher = asyncHandler(async (req, res) => {
+const getPaymentVoucher = asyncHandler(async (req, res) => {
   const paymentvoucher = await PaymentVoucher.find({ approve: true }).populate(
     "jjsfreight",
     "job_no"
@@ -78,7 +74,7 @@ export const getPaymentVoucher = asyncHandler(async (req, res) => {
 // @desc    Get payment Voucher
 // @route   GET /api/getpaymentvoucherNA
 // @access  protect
-export const getPaymentVoucherNA = asyncHandler(async (req, res) => {
+const getPaymentVoucherNA = asyncHandler(async (req, res) => {
   const paymentvoucher = await PaymentVoucher.find({ approve: false }).populate(
     "jjsfreight",
     "job_no"
@@ -90,7 +86,7 @@ export const getPaymentVoucherNA = asyncHandler(async (req, res) => {
 // @desc    Update payment Voucher
 // @route   PUT /api/updatepaymentvoucher/:id
 // @access  protect
-export const updatePaymentVoucher = asyncHandler(async (req, res) => {
+const updatePaymentVoucher = asyncHandler(async (req, res) => {
   const { approve } = req.body;
   const paymentvoucher = await PaymentVoucher.findByIdAndUpdate(
     req.params.id,
@@ -105,7 +101,7 @@ export const updatePaymentVoucher = asyncHandler(async (req, res) => {
 // @desc    Get PDF of Payment voucher
 // @route   GET /api/paymentvoucherPdf
 // @access  protect
-export const pdfPaymentVoucher = asyncHandler(async (req, res) => {
+const pdfPaymentVoucher = asyncHandler(async (req, res) => {
   console.log(req.params.id);
   const paymentvoucher = await PaymentVoucher.findById(req.params.id).populate(
     "jjsfreight",
@@ -143,3 +139,11 @@ export const pdfPaymentVoucher = asyncHandler(async (req, res) => {
 
   res.download(`${__dirname}/pdf/payment_voucher.pdf`);
 });
+
+module.exports = {
+  paymentVoucher,
+  getPaymentVoucher,
+  getPaymentVoucherNA,
+  updatePaymentVoucher,
+  pdfPaymentVoucher,
+};

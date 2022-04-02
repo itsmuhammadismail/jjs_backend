@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const jjsFreightSchema = mongoose.Schema(
   {
@@ -52,4 +52,4 @@ const jjsFreightSchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("JJSFreight", jjsFreightSchema);
+module.exports = mongoose.model("JJSFreight", jjsFreightSchema);

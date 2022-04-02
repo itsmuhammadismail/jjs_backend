@@ -1,12 +1,16 @@
 // @desc    Get job no
 // @route   GET /api/jobno
 
-import expressAsyncHandler from "express-async-handler";
-import jobNoModel from "../models/jobNoModel.js";
+const expressAsyncHandler = require("express-async-handler");
+const jobNoModel = require("../models/jobNoModel.js");
 
 // @access  protect
-export const getJobNo = expressAsyncHandler(async (req, res) => {
+const getJobNo = expressAsyncHandler(async (req, res) => {
   const jobNo = await jobNoModel.findOne();
 
   res.status(200).json({ job_no: jobNo.job });
 });
+
+module.exports = {
+  getJobNo,
+};

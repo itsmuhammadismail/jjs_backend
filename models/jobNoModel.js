@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const jobNoSchema = mongoose.Schema({
   job: Number,
 });
 
-export default mongoose.model("jobNo", jobNoSchema);
+module.exports = mongoose.model("jobNo", jobNoSchema);

@@ -286,4 +286,4 @@ const jjsFreightPdf = (data) => `
 </html>
 `;
 
-export default jjsFreightPdf;
+module.exports =  jjsFreightPdf;

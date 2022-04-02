@@ -1,12 +1,14 @@
-import express from "express";
-import { paymentVoucher } from "../controllers/paymentVoucherContoller.js";
-import { getPaymentVoucher } from "../controllers/paymentVoucherContoller.js";
-import {
+const express = require("express");
+const { paymentVoucher } = require("../controllers/paymentVoucherContoller.js");
+const {
+  getPaymentVoucher,
+} = require("../controllers/paymentVoucherContoller.js");
+const {
   updatePaymentVoucher,
   getPaymentVoucherNA,
   pdfPaymentVoucher,
-} from "../controllers/paymentVoucherContoller.js";
-import protect from "../middlewares/authMiddleware.js";
+} = require("../controllers/paymentVoucherContoller.js");
+const protect = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 router.post("/paymentvoucher", protect, paymentVoucher);
@@ -15,4 +17,4 @@ router.get("/getpaymentvoucherNA", protect, getPaymentVoucherNA);
 router.get("/pdfPaymentVoucher/:id", pdfPaymentVoucher);
 router.put("/updatepaymentvoucher/:id", protect, updatePaymentVoucher);
 
-export default router;
+module.exports = router
